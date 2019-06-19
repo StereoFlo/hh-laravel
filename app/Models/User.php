@@ -86,6 +86,15 @@ class User extends Authenticatable
     }
 
     /**
+     * @param int $id
+     * @return mixed
+     */
+    public function removeById(int $id)
+    {
+        return self::where('id', $id)->delete();
+    }
+
+    /**
      * @param array $data
      *
      * @return User

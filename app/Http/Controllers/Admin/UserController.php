@@ -74,8 +74,13 @@ class UserController extends Controller
         return redirect()->route('admin_user_list');
     }
 
-    public function remove(int $id)
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function remove(int $id): RedirectResponse
     {
-
+        $this->user->removeById($id);
+        return redirect()->route('admin_user_list');
     }
 }
