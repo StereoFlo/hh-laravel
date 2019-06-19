@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Collection;
+use function in_array;
 
 /**
  * Class User
@@ -12,6 +14,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -39,4 +44,33 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getList(int $offset = 0, int $limit = 10): array
+    {
+        /** @var Collection $users */
+        $users = $this->skip($offset)
+            ->take($limit)
+            ->get();
+
+        return $users->toArray();
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function checkRole(string $role): bool
+    {
+        if (!in_array($role, [User::ROLE_ADMIN, User::ROLE_USER])) {
+            return false;
+        }
+        return true;
+    }
 }

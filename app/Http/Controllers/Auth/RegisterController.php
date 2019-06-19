@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Infrastructure\Util;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use function date;
@@ -68,8 +69,8 @@ class RegisterController extends Controller
     public function create(array $data): User
     {
         return User::create([
-            'login' => $data['name'],
-            'password' => Hash::make($data['password']),
+            'login' => Util::getProperty($data, 'name'),
+            'password' => Hash::make(Util::getProperty($data, 'password')),
             'token' => Hash::make(md5(env('APP_KEY') . date(time()) . mt_rand())),
         ]);
     }

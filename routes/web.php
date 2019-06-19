@@ -18,3 +18,9 @@ Route::get('/', function () {
 });
 Route::get('/login', 'Auth\\LoginController@showLoginForm')->name('loginForm');
 Route::post('/login', 'Auth\\LoginController@login')->name('loginProcess');
+
+Route::group(['middleware' => 'isAdmin'], function () {
+    Route::get('admin/dashboard', 'Admin\\DashboardController@index')->name('admin_dashboard');
+    Route::get('admin', 'Admin\\DashboardController@index')->name('admin_index');
+    Route::get('admin/users', 'Admin\\UserController@getList')->name('admin_user_list');
+});
