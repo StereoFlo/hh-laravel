@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function redirect;
+use function view;
 
 /**
  * Class UserController
@@ -40,7 +41,7 @@ class UserController extends Controller
     public function getList(Request $request): View
     {
         $users = $this->user->getList($request->get('offset', 0), $request->get('limit', 10));
-        return \view('admin.users.user_list', ['users' => $users]);
+        return view('admin.users.user_list', ['users' => $users]);
     }
 
     /**
@@ -52,7 +53,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (empty($request->request->all())) {
-            return \view('admin.users.user_form');
+            return view('admin.users.user_form');
         }
         $this->user->createOrUpdate($request->request->all());
         return redirect()->route('admin_user_list');
@@ -68,7 +69,7 @@ class UserController extends Controller
     {
         if (empty($request->request->all())) {
             $user = $this->user->getById($id);
-            return \view('admin.users.user_form', ['user' => $user]);
+            return view('admin.users.user_form', ['user' => $user]);
         }
         $this->user->createOrUpdate($request->request->all());
         return redirect()->route('admin_user_list');
