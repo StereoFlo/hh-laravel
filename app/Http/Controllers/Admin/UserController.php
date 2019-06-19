@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Infrastructure\Util;
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -47,19 +47,31 @@ class UserController extends Controller
      * @param Request $request
      *
      * @return Factory|RedirectResponse|View
+     * @throws Exception
      */
     public function store(Request $request)
     {
         if (empty($request->request->all())) {
             return \view('admin.users.user_form');
         }
-        $this->user->createNew($request->request->all());
+        $this->user->createOrUpdate($request->request->all());
         return redirect()->route('admin_user_list');
     }
 
-    public function update(int $id)
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return Factory|RedirectResponse|View
+     * @throws Exception
+     */
+    public function update(Request $request, int $id)
     {
-
+        if (empty($request->request->all())) {
+            $user = $this->user->getById($id);
+            return \view('admin.users.user_form', ['user' => $user]);
+        }
+        $this->user->createOrUpdate($request->request->all());
+        return redirect()->route('admin_user_list');
     }
 
     public function remove(int $id)

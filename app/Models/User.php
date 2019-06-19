@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Infrastructure\Util;
+use Exception;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Types\Self_;
 
 /**
  * Class User
@@ -75,17 +77,43 @@ class User extends Authenticatable
     }
 
     /**
+     * @param int $id
+     * @return User
+     */
+    public function getById(int $id): self
+    {
+        return self::findOrFail($id);
+    }
+
+    /**
      * @param array $data
      *
      * @return User
+     * @throws Exception
      */
-    public function createNew(array $data): self
+    public function createOrUpdate(array $data): self
     {
-        return self::create([
-            'login' => Util::getProperty($data, 'login'),
-            'password' => Hash::make(Util::getProperty($data, 'password')),
-            'token' => md5(env('APP_KEY') . date(time()) . mt_rand()),
-            'role' => Util::getProperty($data, 'role', self::ROLE_USER),
-        ]);
+        if (empty(Util::getProperty($data, 'id'))) {
+            return self::create([
+                'login' => Util::getProperty($data, 'login'),
+                'password' => Hash::make(Util::getProperty($data, 'password')),
+                'token' => md5(env('APP_KEY') . date(time()) . mt_rand()),
+                'role' => Util::getProperty($data, 'role', self::ROLE_USER),
+            ]);
+        }
+
+        $user = self::where('id', Util::getProperty($data, 'id'))->get();
+        if (empty($user)) {
+            throw new Exception('user does not found by provided id');
+        }
+
+        $user->login = Util::getProperty($data, 'login');
+        $user->password = Util::getProperty($data, 'password');
+        $user->token = md5(env('APP_KEY') . date(time()) . mt_rand());
+        $user->role = Util::getProperty($data, 'role', self::ROLE_USER);
+
+        self::save($user);
+
+        return $user;
     }
 }

@@ -25,4 +25,6 @@ Route::group(['middleware' => 'isAdmin'], function () {
     Route::get('admin/users', 'Admin\\UserController@getList')->name('admin_user_list');
     Route::get('admin/users/store', 'Admin\\UserController@store')->name('admin_user_form');
     Route::post('admin/users/store', 'Admin\\UserController@store')->name('admin_user_from_process');
+    Route::get('admin/users/store/{id}', 'Admin\\UserController@update')->name('admin_user_from_update');
+    Route::post('admin/users/store/{id}', 'Admin\\UserController@update')->name('admin_user_from_update_process');
 });
