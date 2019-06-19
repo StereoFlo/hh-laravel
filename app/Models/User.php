@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use function in_array;
+use function strtolower;
 
 /**
  * Class User
@@ -62,13 +63,11 @@ class User extends Authenticatable
     }
 
     /**
-     * @param string $role
-     *
      * @return bool
      */
-    public function checkRole(string $role): bool
+    public function isAdmin(): bool
     {
-        if (!in_array($role, [User::ROLE_ADMIN, User::ROLE_USER])) {
+        if ($this->role !== self::ROLE_ADMIN) {
             return false;
         }
         return true;

@@ -23,7 +23,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (empty($request->user()) || !$request->user()->checkRole(User::ROLE_ADMIN)) {
+        if (empty($request->user()) || !$request->user()->isAdmin()) {
             abort(401, 'This action is unauthorized.');
         }
         return $next($request);
