@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use function date;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use function md5;
+use function mt_rand;
+use function time;
 
 class RegisterController extends Controller
 {
@@ -46,10 +50,10 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    public function validator(array $data)
     {
         return Validator::make($data, [
-            'login' => ['required', 'string', 'max:255', 'unique:users'],
+            'login' => ['required', 'string', 'max:20', 'unique:users'],
             'password' => ['required', 'string', 'min:2', 'confirmed'],
             'token' => ['required', 'string'],
         ]);
@@ -61,12 +65,12 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data): User
+    public function create(array $data): User
     {
         return User::create([
             'login' => $data['name'],
             'password' => Hash::make($data['password']),
-            'token' => Hash::make(date(time()) . time() . mt_rand()),
+            'token' => Hash::make(md5(env('APP_KEY') . date(time()) . mt_rand())),
         ]);
     }
 }
