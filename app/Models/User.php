@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Infrastructure\Util;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
-use function in_array;
-use function strtolower;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class User
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'login', 'token', 'role',
+        'login', 'token', 'role', 'password'
     ];
 
     /**
@@ -34,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     /**
@@ -70,6 +70,22 @@ class User extends Authenticatable
         if ($this->role !== self::ROLE_ADMIN) {
             return false;
         }
+
         return true;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return User
+     */
+    public function createNew(array $data): self
+    {
+        return self::create([
+            'login' => Util::getProperty($data, 'login'),
+            'password' => Hash::make(Util::getProperty($data, 'password')),
+            'token' => md5(env('APP_KEY') . date(time()) . mt_rand()),
+            'role' => Util::getProperty($data, 'role', self::ROLE_USER),
+        ]);
     }
 }
