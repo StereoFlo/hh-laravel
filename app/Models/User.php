@@ -102,18 +102,13 @@ class User extends Authenticatable
             ]);
         }
 
-        $user = self::where('id', Util::getProperty($data, 'id'))->get();
-        if (empty($user)) {
-            throw new Exception('user does not found by provided id');
-        }
+        self::where('id', Util::getProperty($data, 'id'))->update([
+            'login' => Util::getProperty($data, 'login'),
+            'password' => Hash::make(Util::getProperty($data, 'password')),
+            'token' => md5(env('APP_KEY') . date(time()) . mt_rand()),
+            'role' => Util::getProperty($data, 'role', self::ROLE_USER),
+        ]);
 
-        $user->login = Util::getProperty($data, 'login');
-        $user->password = Util::getProperty($data, 'password');
-        $user->token = md5(env('APP_KEY') . date(time()) . mt_rand());
-        $user->role = Util::getProperty($data, 'role', self::ROLE_USER);
-
-        self::save($user);
-
-        return $user;
+        return $this;
     }
 }
