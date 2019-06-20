@@ -83,4 +83,14 @@ class WeatherController extends AbstractController
 
         return \view('weather.show', ['city' => $city]);
     }
+
+    public function addSchedule(Request $request)
+    {
+
+    }
+
+    public function removeSchedule(int $id)
+    {
+
+    }
 }
