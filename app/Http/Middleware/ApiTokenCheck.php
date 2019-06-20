@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class ApiTokenCheck
 
         $user = new User();
         $user = $user->getByToken($request->headers->get('x-api-token'));
-        if (empty($user['token']) || empty($user['token_valid_until']) || $user['token_valid_until']->timestamp <= time()) {
+        if (empty($user['token']) || empty($user['token_valid_until']) || Carbon::parse($user['token_valid_until'])->timestamp <= time()) {
             abort(403);
         }
         return $next($request);
