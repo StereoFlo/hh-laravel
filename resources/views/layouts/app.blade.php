@@ -19,8 +19,19 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('admin_index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin_user_list') }}">Users</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{{ route('admin_user_list') }}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Users</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="{{ route('admin_user_list') }}">List</a>
+                    <a class="dropdown-item" href="{{ route('admin_user_form') }}">Create new</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{{ route('admin_weather_list') }}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cities</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="{{ route('admin_weather_list') }}">List</a>
+                    <a class="dropdown-item" href="{{ route('admin_weather_add_city') }}">Create new</a>
+                </div>
             </li>
         </ul>
     </div>
@@ -39,6 +50,5 @@
 <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/popper.min.js"></script>
 <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
-<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
