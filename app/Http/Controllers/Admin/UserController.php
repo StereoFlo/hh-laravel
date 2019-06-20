@@ -34,13 +34,11 @@ class UserController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @return View
      */
-    public function getList(Request $request): View
+    public function getList(): View
     {
-        $users = $this->user->getList($request->get('offset', 0), $request->get('limit', 10));
+        $users = $this->user->getList();
         return view('admin.users.user_list', ['users' => $users]);
     }
 

@@ -6,6 +6,7 @@ use App\Infrastructure\Util;
 use Exception;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use phpDocumentor\Reflection\Types\Self_;
@@ -49,19 +50,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return array
+     * @return LengthAwarePaginator
      */
-    public function getList(int $offset = 0, int $limit = 10): array
+    public function getList()
     {
-        /** @var Collection $users */
-        $users = $this->skip($offset)
-            ->take($limit)
-            ->get();
-
-        return $users->toArray();
+        return $this->paginate(10);
     }
 
     /**
