@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ApiTokenCheck;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckForMaintenanceMode;
@@ -82,6 +83,7 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'ApiTokenCheck' => ApiTokenCheck::class,
     ];
 
     /**

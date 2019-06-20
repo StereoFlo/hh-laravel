@@ -89,6 +89,16 @@ class User extends Authenticatable
     }
 
     /**
+     * @param string $token
+     *
+     * @return Collection
+     */
+    public function getByToken(string $token)
+    {
+        return self::where('token', $token)->firstOrFail();
+    }
+
+    /**
      * @param int $id
      * @return mixed
      */
