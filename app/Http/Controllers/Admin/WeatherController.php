@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AbstractController;
 use App\Models\Weather;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Psr\Http\Client\ClientExceptionInterface;
-use function view;
 
 /**
  * Class WeatherController
@@ -18,26 +16,71 @@ use function view;
 class WeatherController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Weather $weatherModel
+     * @var Weather
+     */
+    private $weatherModel;
+
+    /**
+     * WeatherController constructor.
      *
-     * @return Factory|View
+     * @param Weather $weatherModel
+     */
+    public function __construct(Weather $weatherModel)
+    {
+        $this->weatherModel = $weatherModel;
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return RedirectResponse|View
      * @throws ClientExceptionInterface
      */
-    public function addCity(Request $request, Weather $weatherModel)
+    public function addCity(Request $request, int $id = 0)
     {
-        $city = $request->get('city');
-        $weatherModel->updateWeather($city);
-        return redirect()->route('');
+        if (empty($request->request->count())) {
+            $city = null;
+            if ($id) {
+                $city = $this->weatherModel->getByCityId($id);
+            }
+            return \view('weather.form', ['city' => $city]);
+        }
+        $city = $request->get('name');
+        $this->weatherModel->updateWeather($city);
+        return redirect()->route('admin_weather_list');
     }
 
-    public function deleteCity()
+    /**
+     * @param int $cityId
+     *
+     * @return RedirectResponse
+     */
+    public function deleteCity(int $cityId): RedirectResponse
     {
-
+        $this->weatherModel->removeByCityId($cityId);
+        return redirect()->route('admin_weather_list');
     }
 
-    public function getList()
+    /**
+     * @return View
+     */
+    public function getList(): View
     {
+        $cities = $this->weatherModel->getList();
 
+        return \view('weather.list', ['cities' => $cities]);
+    }
+
+    /**
+     * @param int $cityId
+     *
+     * @return View
+     */
+    public function show(int $cityId): View
+    {
+        $city = $this->weatherModel->getByCityId($cityId);
+
+        return \view('weather.show', ['city' => $city]);
     }
 }

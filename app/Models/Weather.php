@@ -6,6 +6,7 @@ use App\Infrastructure\WeatherFactory;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use OpenWeatherMapApi\OpenWeatherMap;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -45,6 +46,35 @@ class Weather extends Model
             }
         }
         return $owm;
+    }
+
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function getList()
+    {
+        $test = self::distinct()->select(['city_id', 'city_name', 'city_user_query'])->paginate(10);
+        return $test;
+    }
+
+    /**
+     * @param int $cityId
+     *
+     * @return self
+     */
+    public function getByCityId(int $cityId)
+    {
+        return self::where('city_id', $cityId)->get();
+    }
+
+    /**
+     * @param int $cityId
+     *
+     * @return mixed
+     */
+    public function removeByCityId(int $cityId)
+    {
+        return self::where('city_id', $cityId)->delete();
     }
 
     /**
