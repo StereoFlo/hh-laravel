@@ -18,7 +18,7 @@ class CreateWeatherSchedulesTable extends Migration
     {
         Schema::create('weather_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->time('run_at');
+            $table->time('run_at')->unique();
             $table->timestamps();
         });
     }

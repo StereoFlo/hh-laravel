@@ -31,6 +31,8 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="{{ route('admin_weather_list') }}">List</a>
                     <a class="dropdown-item" href="{{ route('admin_weather_add_city') }}">Create new</a>
+                    <a class="dropdown-item" href="{{ route('admin_weather_schedule_list') }}">Schedule list</a>
+                    <a class="dropdown-item" href="{{ route('admin_weather_schedule_form') }}">Create schedule</a>
                 </div>
             </li>
         </ul>

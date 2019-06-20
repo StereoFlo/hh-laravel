@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Infrastructure\WeatherFactory;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use OpenWeatherMapApi\OpenWeatherMap;
@@ -24,19 +25,21 @@ use Psr\Http\Client\ClientExceptionInterface;
 class Weather extends Model
 {
     /**
-     * @param string $cityName
+     * @param string   $cityName
+     *
+     * @param int|null $id
      *
      * @return OpenWeatherMap
      * @throws ClientExceptionInterface
      */
-    public function updateWeather(string $cityName)
+    public function updateWeather(?string $cityName, int $id = null)
     {
-        $owm = WeatherFactory::getOWM($cityName);
+        $owm = WeatherFactory::getOWM($cityName, $id);
         if ($owm->getCount()) {
             foreach ($owm->getStack() as $data) {
                 $self = new self();
                 $self->city_id = $owm->getCityId();
-                $self->city_user_query = $cityName;
+                $self->city_user_query = $cityName ? $cityName : $this->city_user_query;
                 $self->city_name = $owm->getCityName();
                 $self->request_time = Carbon::now();
                 $self->today_temp = $this->calcCelsius($data->getMain()->getTemp());
@@ -49,10 +52,15 @@ class Weather extends Model
     }
 
     /**
-     * @return LengthAwarePaginator
+     * @param bool $withoutPaginate
+     *
+     * @return LengthAwarePaginator|Collection
      */
-    public function getList()
+    public function getList(bool $withoutPaginate = false)
     {
+        if ($withoutPaginate) {
+            return self::get();
+        }
         $test = self::distinct()->select(['city_id', 'city_name', 'city_user_query'])->paginate(10);
         return $test;
     }

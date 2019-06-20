@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,6 +27,16 @@ class WeatherSchedule extends Model
     public function getList()
     {
         return self::paginate(10);
+    }
+
+    /**
+     * @param string $time
+     *
+     * @return Collection
+     */
+    public function getByTime(string $time): Collection
+    {
+        return self::where('run_at', $time)->get();
     }
 
     /**
