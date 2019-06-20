@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+    @if(empty($users->count()))
+        <p>No users added yet. But you can do that <a href="{{ route('admin_user_form') }}">here</a> </p>
+    @else
     <table class="table">
         <tbody>
         @foreach($users as $user)
@@ -16,4 +19,5 @@
         </tbody>
     </table>
     {{ $users->links() }}
+    @endif
 @endsection

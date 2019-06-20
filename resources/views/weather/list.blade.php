@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+    @if(empty($cities->count()))
+        <p>No cities added yet. But you can do that <a href="{{ route('admin_weather_add_city') }}">here</a> </p>
+    @else
     <table class="table">
         <tbody>
         @foreach($cities as $city)
@@ -15,4 +18,5 @@
         </tbody>
     </table>
     {{ $cities->links() }}
+    @endif
 @endsection
