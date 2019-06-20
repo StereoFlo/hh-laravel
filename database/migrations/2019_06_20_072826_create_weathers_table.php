@@ -16,6 +16,8 @@ class CreateWeathersTable extends Migration
         Schema::create('weathers', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('city_id')->unsigned();
+            $table->string('city_name')->length(50);
+            $table->string('city_user_query')->length(50);
             $table->timestamp('request_time')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->float('today_temp')->nullable();
             $table->float('today_max_temp')->nullable();

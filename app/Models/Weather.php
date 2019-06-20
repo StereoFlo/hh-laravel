@@ -16,6 +16,8 @@ use Psr\Http\Client\ClientExceptionInterface;
  * @property float           today_temp
  * @property float           today_max_temp
  * @property float           today_min_temp
+ * @property string          city_user_query
+ * @property string          city_name
  * @package App\Models
  */
 class Weather extends Model
@@ -33,6 +35,8 @@ class Weather extends Model
             foreach ($owm->getStack() as $data) {
                 $self = new self();
                 $self->city_id = $data->getSys()->getId();
+                $self->city_user_query = $cityName;
+                $self->city_name = ''; //$owm->getCity()->getName();
                 $self->request_time = Carbon::now();
                 $self->today_temp = $this->calcCelsius($data->getMain()->getTemp());
                 $self->today_max_temp = $this->calcCelsius($data->getMain()->getTempMax());
