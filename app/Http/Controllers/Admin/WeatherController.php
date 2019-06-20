@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AbstractController;
 use App\Models\Weather;
+use App\Models\WeatherSchedule;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -84,13 +86,41 @@ class WeatherController extends AbstractController
         return \view('weather.show', ['city' => $city]);
     }
 
-    public function addSchedule(Request $request)
+    /**
+     * @param WeatherSchedule $weatherSchedule
+     *
+     * @return Factory|View
+     */
+    public function getScheduleList(WeatherSchedule $weatherSchedule)
     {
-
+        return \view('weather.schedule_list', ['schedules' => $weatherSchedule->getList()]);
     }
 
-    public function removeSchedule(int $id)
+    /**
+     * @param Request         $request
+     * @param WeatherSchedule $weatherSchedule
+     *
+     * @return Factory|RedirectResponse|View
+     */
+    public function addSchedule(Request $request, WeatherSchedule $weatherSchedule)
     {
+        if (empty($request->request->count())) {
+            return \view('weather.schedule_form');
+        }
+        $city = $request->get('date');
+        $weatherSchedule->store($city);
+        return redirect()->route('admin_weather_schedule_list');
+    }
 
+    /**
+     * @param WeatherSchedule $weatherSchedule
+     * @param int             $id
+     *
+     * @return RedirectResponse
+     */
+    public function removeSchedule(WeatherSchedule $weatherSchedule, int $id)
+    {
+        $weatherSchedule->removeById($id);
+        return redirect()->route('admin_weather_schedule_list');
     }
 }

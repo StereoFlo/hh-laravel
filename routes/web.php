@@ -18,4 +18,7 @@ Route::group(['middleware' => 'isAdmin'], function () {
     Route::get('admin/weather/delete_city/{id}', 'Admin\\WeatherController@deleteCity')->name('admin_weather_delete_city')->where('id', '[0-9]+');
     Route::get('admin/weather', 'Admin\\WeatherController@getList')->name('admin_weather_list');
     Route::get('admin/weather/{id}', 'Admin\\WeatherController@show')->name('admin_weather_show')->where('id', '[0-9]+');
+    Route::any('admin/weather/schedule', 'Admin\\WeatherController@getScheduleList')->name('admin_weather_schedule_list');
+    Route::any('admin/weather/schedule/form', 'Admin\\WeatherController@addSchedule')->name('admin_weather_schedule_form');
+    Route::get('admin/weather/schedule/{id}/delete', 'Admin\\WeatherController@removeSchedule')->name('admin_weather_schedule_delete')->where('id', '[0-9]+');
 });

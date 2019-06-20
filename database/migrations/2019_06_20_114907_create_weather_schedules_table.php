@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 /**
  * Class CreateWeatherShedulesTable
  */
-class CreateWeatherShedulesTable extends Migration
+class CreateWeatherSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,9 @@ class CreateWeatherShedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('weather_shedules', function (Blueprint $table) {
+        Schema::create('weather_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('run_at');
+            $table->time('run_at');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateWeatherShedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weather_shedules');
+        Schema::dropIfExists('weather_schedules');
     }
 }
