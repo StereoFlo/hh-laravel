@@ -84,6 +84,6 @@ class Weather extends Model
      */
     private function calcCelsius(float $fahrenheit): float
     {
-        return ($fahrenheit - 32) * 5/9;
+        return ($fahrenheit - 273.15);
     }
 }
