@@ -35,9 +35,9 @@ class Weather extends Model
         if ($owm->getCount()) {
             foreach ($owm->getStack() as $data) {
                 $self = new self();
-                $self->city_id = $data->getSys()->getId();
+                $self->city_id = $owm->getCityId();
                 $self->city_user_query = $cityName;
-                $self->city_name = ''; //$owm->getCity()->getName();
+                $self->city_name = $owm->getCityName();
                 $self->request_time = Carbon::now();
                 $self->today_temp = $this->calcCelsius($data->getMain()->getTemp());
                 $self->today_max_temp = $this->calcCelsius($data->getMain()->getTempMax());

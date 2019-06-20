@@ -1817,12 +1817,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/StereoFlo/OpenWeatherMapApi.git",
-                "reference": "c6f7558c17caabacebf8be0cfd6fb35e042499a8"
+                "reference": "eb853fe07b0a33416e318c956f4fee736084b940"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/StereoFlo/OpenWeatherMapApi/zipball/c6f7558c17caabacebf8be0cfd6fb35e042499a8",
-                "reference": "c6f7558c17caabacebf8be0cfd6fb35e042499a8",
+                "url": "https://api.github.com/repos/StereoFlo/OpenWeatherMapApi/zipball/eb853fe07b0a33416e318c956f4fee736084b940",
+                "reference": "eb853fe07b0a33416e318c956f4fee736084b940",
                 "shasum": ""
             },
             "require": {
@@ -1843,7 +1843,7 @@
                 "MIT"
             ],
             "description": "open-weather-map-api",
-            "time": "2019-06-20T09:06:32+00:00"
+            "time": "2019-06-20T11:30:28+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

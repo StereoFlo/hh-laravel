@@ -29,7 +29,7 @@ Route::group(['middleware' => 'isAdmin'], function () {
     Route::post('admin/users/store/{id}', 'Admin\\UserController@update')->name('admin_user_from_update_process')->where('id', '[0-9]+');
     Route::get('admin/users/remove/{id}', 'Admin\\UserController@remove')->name('admin_user_remove')->where('id', '[0-9]+');
     Route::any('admin/weather/add_city', 'Admin\\WeatherController@addCity')->name('admin_weather_add_city');
-    Route::get('admin/weather/delete_city', 'Admin\\WeatherController@deleteCity')->name('admin_weather_delete_city');
+    Route::get('admin/weather/delete_city/{id}', 'Admin\\WeatherController@deleteCity')->name('admin_weather_delete_city')->where('id', '[0-9]+');
     Route::get('admin/weather', 'Admin\\WeatherController@getList')->name('admin_weather_list');
     Route::get('admin/weather/{id}', 'Admin\\WeatherController@show')->name('admin_weather_show')->where('id', '[0-9]+');
 });
