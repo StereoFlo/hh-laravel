@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Infrastructure\Util;
 use App\Models\User;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use function date;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +13,11 @@ use function md5;
 use function mt_rand;
 use function time;
 
-class RegisterController extends Controller
+/**
+ * Class RegisterController
+ * @package App\Http\Controllers\Auth
+ */
+class RegisterController extends AbstractController
 {
     /*
     |--------------------------------------------------------------------------

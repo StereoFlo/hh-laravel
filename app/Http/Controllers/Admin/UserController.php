@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Models\User;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -16,7 +16,7 @@ use function view;
  * Class UserController
  * @package App\Http\Controllers\Admin
  */
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @var User
