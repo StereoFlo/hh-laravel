@@ -14,11 +14,6 @@ use Illuminate\Http\Request;
  */
 class LoginController extends AbstractController
 {
-    public function __construct()
-    {
-        $this->middleware('ApiTokenCheck');
-    }
-
     /**
      * @param User    $user
      * @param Request $request
