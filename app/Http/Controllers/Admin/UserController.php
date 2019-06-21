@@ -42,7 +42,12 @@ class UserController extends AbstractController
         return view('admin.users.user_list', ['users' => $users]);
     }
 
-    public function form(int $id = null)
+    /**
+     * @param int|null $id
+     *
+     * @return View
+     */
+    public function form(int $id = null): View
     {
         $user = null;
         if (isset($id)) {
@@ -54,10 +59,10 @@ class UserController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return Factory|RedirectResponse|View
+     * @return RedirectResponse
      * @throws Exception
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->user->createOrUpdate($request->request->all());
         return redirect()->route('admin_user_list');
@@ -65,11 +70,11 @@ class UserController extends AbstractController
 
     /**
      * @param Request $request
-     * @param int $id
-     * @return Factory|RedirectResponse|View
+     *
+     * @return RedirectResponse
      * @throws Exception
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request): RedirectResponse
     {
         $this->user->createOrUpdate($request->request->all());
         return redirect()->route('admin_user_list');
