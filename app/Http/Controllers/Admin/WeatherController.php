@@ -49,7 +49,10 @@ class WeatherController extends AbstractController
             return \view('weather.form', ['city' => $city]);
         }
         $city = $request->get('name');
-        $this->weatherModel->updateWeather($city);
+        $res = $this->weatherModel->updateWeather($city);
+        if (empty($res)) {
+            return \view('weather.form', ['city' => $city, 'error' => 'city does not found or was an error while request processing']);
+        }
         return redirect()->route('admin_weather_list');
     }
 

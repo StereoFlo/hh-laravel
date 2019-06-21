@@ -29,26 +29,30 @@ class Weather extends Model
      *
      * @param int|null $id
      *
-     * @return OpenWeatherMap
+     * @return OpenWeatherMap|null
      * @throws ClientExceptionInterface
      */
-    public function updateWeather(?string $cityName, int $id = null)
+    public function updateWeather(?string $cityName, int $id = null): ?OpenWeatherMap
     {
-        $owm = WeatherFactory::getOWM($cityName, $id);
-        if ($owm->getCount()) {
-            foreach ($owm->getStack() as $data) {
-                $self = new self();
-                $self->city_id = $owm->getCityId();
-                $self->city_user_query = $cityName ? $cityName : $this->city_user_query;
-                $self->city_name = $owm->getCityName();
-                $self->request_time = Carbon::now();
-                $self->today_temp = $this->calcCelsius($data->getMain()->getTemp());
-                $self->today_max_temp = $this->calcCelsius($data->getMain()->getTempMax());
-                $self->today_min_temp = $this->calcCelsius($data->getMain()->getTempMin());
-                $self->save();
+        try {
+            $owm = WeatherFactory::getOWM($cityName, $id);
+            if ($owm->getCount()) {
+                foreach ($owm->getStack() as $data) {
+                    $self = new self();
+                    $self->city_id = $owm->getCityId();
+                    $self->city_user_query = $cityName ? $cityName : $this->city_user_query;
+                    $self->city_name = $owm->getCityName();
+                    $self->request_time = Carbon::now();
+                    $self->today_temp = $this->calcCelsius($data->getMain()->getTemp());
+                    $self->today_max_temp = $this->calcCelsius($data->getMain()->getTempMax());
+                    $self->today_min_temp = $this->calcCelsius($data->getMain()->getTempMin());
+                    $self->save();
+                }
             }
+            return $owm;
+        } catch (\Exception $exception) {
+            return null;
         }
-        return $owm;
     }
 
     /**
