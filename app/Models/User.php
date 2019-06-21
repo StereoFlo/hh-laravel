@@ -115,21 +115,18 @@ class User extends Authenticatable
      */
     public function createOrUpdate(array $data): self
     {
-        if (empty(Util::getProperty($data, 'id'))) {
-            return self::create([
-                'login' => Util::getProperty($data, 'login'),
-                'password' => Hash::make(Util::getProperty($data, 'password')),
-                'token' => md5(env('APP_KEY') . date(time()) . mt_rand()),
-                'role' => Util::getProperty($data, 'role', self::ROLE_USER),
-            ]);
-        }
-
-        self::where('id', Util::getProperty($data, 'id'))->update([
+        $toSave = [
             'login' => Util::getProperty($data, 'login'),
             'password' => Hash::make(Util::getProperty($data, 'password')),
             'token' => md5(env('APP_KEY') . date(time()) . mt_rand()),
             'role' => Util::getProperty($data, 'role', self::ROLE_USER),
-        ]);
+        ];
+
+        if (empty(Util::getProperty($data, 'id'))) {
+            return self::create($toSave);
+        }
+
+        self::where('id', Util::getProperty($data, 'id'))->update($toSave);
 
         return $this;
     }
