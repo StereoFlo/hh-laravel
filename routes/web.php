@@ -14,9 +14,9 @@ Route::group(['middleware' => 'isAdmin'], function () {
     Route::get('admin/dashboard', 'Admin\\DashboardController@index')->name('admin_dashboard');
     Route::get('admin', 'Admin\\DashboardController@index')->name('admin_index');
     Route::get('admin/users', 'Admin\\UserController@getList')->name('admin_user_list');
-    Route::get('admin/users/store', 'Admin\\UserController@store')->name('admin_user_form');
+    Route::get('admin/users/store', 'Admin\\UserController@form')->name('admin_user_form');
     Route::post('admin/users/store', 'Admin\\UserController@store')->name('admin_user_from_process');
-    Route::get('admin/users/store/{id}', 'Admin\\UserController@update')->name('admin_user_from_update')->where('id', '[0-9]+');
+    Route::get('admin/users/store/{id}', 'Admin\\UserController@form')->name('admin_user_from_update')->where('id', '[0-9]+');
     Route::post('admin/users/store/{id}', 'Admin\\UserController@update')->name('admin_user_from_update_process')->where('id', '[0-9]+');
     Route::get('admin/users/remove/{id}', 'Admin\\UserController@remove')->name('admin_user_remove')->where('id', '[0-9]+');
     Route::any('admin/weather/add_city', 'Admin\\WeatherController@addCity')->name('admin_weather_add_city');

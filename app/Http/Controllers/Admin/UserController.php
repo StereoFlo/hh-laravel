@@ -42,6 +42,15 @@ class UserController extends AbstractController
         return view('admin.users.user_list', ['users' => $users]);
     }
 
+    public function form(int $id = null)
+    {
+        $user = null;
+        if (isset($id)) {
+            $user = $this->user->getById($id);
+        }
+        return view('admin.users.user_form', ['user' => $user]);
+    }
+
     /**
      * @param Request $request
      *
@@ -50,9 +59,6 @@ class UserController extends AbstractController
      */
     public function store(Request $request)
     {
-        if (empty($request->request->all())) {
-            return view('admin.users.user_form');
-        }
         $this->user->createOrUpdate($request->request->all());
         return redirect()->route('admin_user_list');
     }
@@ -65,10 +71,6 @@ class UserController extends AbstractController
      */
     public function update(Request $request, int $id)
     {
-        if (empty($request->request->all())) {
-            $user = $this->user->getById($id);
-            return view('admin.users.user_form', ['user' => $user]);
-        }
         $this->user->createOrUpdate($request->request->all());
         return redirect()->route('admin_user_list');
     }
