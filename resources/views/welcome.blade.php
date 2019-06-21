@@ -111,12 +111,8 @@
                 </p>
             </form>
         </div>
-        <textarea id="loginResult">
-
-                </textarea>
-        <textarea id="weatherResult">
-
-                </textarea>
+        <textarea id="loginResult"></textarea>
+        <textarea id="weatherResult"></textarea>
     </div>
 </div>
 </body>

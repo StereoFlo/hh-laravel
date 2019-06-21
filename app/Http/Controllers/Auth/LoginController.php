@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\AbstractController;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends AbstractController
 {
@@ -21,11 +23,20 @@ class LoginController extends AbstractController
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
+     * @var Request
      */
-    protected $redirectTo = '/';
+    private $request;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->middleware('guest')->except('logout');
+        $this->request = $request;
+    }
 
     /**
      * @return string
@@ -35,13 +46,12 @@ class LoginController extends AbstractController
         return 'login';
     }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function redirectPath()
     {
-        $this->middleware('guest')->except('logout');
+        $user = $this->request->user();
+        if ($user->role === User::ROLE_ADMIN) {
+            return '/admin';
+        }
+        return '/';
     }
 }
