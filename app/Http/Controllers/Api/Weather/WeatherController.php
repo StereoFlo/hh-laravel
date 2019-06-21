@@ -20,6 +20,6 @@ class WeatherController extends AbstractApiController
 
     public function getList(Weather $weather)
     {
-        return JsonResponse::create($weather->getList()->toArray());
+        return JsonResponse::create($weather->getList(true)->toArray());
     }
 }
