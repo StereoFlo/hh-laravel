@@ -6,8 +6,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', 'Auth\\LoginController@showLoginForm')->name('loginForm');
-Route::post('/login', 'Auth\\LoginController@login')->name('loginProcess');
+Route::get('login', 'Auth\\LoginController@showLoginForm')->name('loginForm');
+Route::post('login', 'Auth\\LoginController@login')->name('loginProcess');
+Route::get('logout', 'Auth\\LoginController@logout')->name('logout');
 
 Route::group(['middleware' => 'isAdmin'], function () {
     Route::get('admin/dashboard', 'Admin\\DashboardController@index')->name('admin_dashboard');

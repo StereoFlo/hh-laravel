@@ -16,6 +16,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+            @if(\Illuminate\Support\Facades\Auth::user() && \Illuminate\Support\Facades\Auth::user()->role === 'admin')
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('admin_index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
@@ -35,6 +36,7 @@
                     <a class="dropdown-item" href="{{ route('admin_weather_schedule_form') }}">Create schedule</a>
                 </div>
             </li>
+            @endif
         </ul>
     </div>
 </nav>
