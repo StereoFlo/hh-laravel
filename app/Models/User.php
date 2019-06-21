@@ -22,30 +22,12 @@ class User extends Authenticatable
     const ROLE_USER = 'user';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'login', 'token', 'token_valid_until', 'role', 'password'
-    ];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'remember_token', 'password'
     ];
 
     /**
