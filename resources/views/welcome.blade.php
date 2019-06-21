@@ -61,6 +61,7 @@
 			document.getElementById("mainBtn").addEventListener("click", function (e) {
 				e.preventDefault();
 				fetch('/api/auth', {
+					credentials: 'omit',
 					method: 'post',
 					body: JSON.stringify({
 						'login': document.getElementById("login").value,
@@ -76,6 +77,7 @@
 					})
 					.then(token => {
 						fetch('/api/weather', {
+							credentials: 'omit',
 							headers: new Headers({
 								'X-API-TOKEN': token
 							}),
