@@ -60,7 +60,13 @@
 		document.addEventListener('DOMContentLoaded', function () {
 			document.getElementById("mainBtn").addEventListener("click", function (e) {
 				e.preventDefault();
+				document.getElementById("loginResult").value = '';
+				document.getElementById("weatherResult").value = '';
+
 				fetch('/api/auth', {
+					headers: new Headers({
+						'Content-Type': 'application/json',
+					}),
 					credentials: 'omit',
 					method: 'post',
 					body: JSON.stringify({
@@ -79,7 +85,8 @@
 						fetch('/api/weather', {
 							credentials: 'omit',
 							headers: new Headers({
-								'X-API-TOKEN': token
+								'X-API-TOKEN': token,
+                                'Content-Type': 'application/json',
 							}),
 							method: 'get'
 						})

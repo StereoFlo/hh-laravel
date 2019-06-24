@@ -66,7 +66,7 @@ class User extends Authenticatable
      */
     public function getByLogin(string $login)
     {
-        return self::where('login', $login)->firstOrFail();
+        return self::where('login', $login)->get();
     }
 
     /**
