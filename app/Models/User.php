@@ -76,7 +76,7 @@ class User extends Authenticatable
      */
     public function getByToken(string $token)
     {
-        return self::where('token', $token)->firstOrFail();
+        return self::where('token', $token)->get();
     }
 
     /**
