@@ -62,21 +62,21 @@ class User extends Authenticatable
     /**
      * @param string $login
      *
-     * @return Collection
+     * @return self
      */
-    public function getByLogin(string $login)
+    public function getByLogin(string $login): self
     {
-        return self::where('login', $login)->get();
+        return self::where('login', $login)->first();
     }
 
     /**
      * @param string $token
      *
-     * @return Collection
+     * @return self
      */
-    public function getByToken(string $token)
+    public function getByToken(string $token): self
     {
-        return self::where('token', $token)->get();
+        return self::where('token', $token)->first();
     }
 
     /**
