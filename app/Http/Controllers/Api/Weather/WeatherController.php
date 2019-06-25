@@ -12,14 +12,22 @@ use Illuminate\Http\JsonResponse;
  */
 class WeatherController extends AbstractApiController
 {
+    /**
+     * WeatherController constructor.
+     */
     public function __construct()
     {
         parent::__construct();
         $this->middleware('ApiTokenCheck');
     }
 
-    public function getList(Weather $weather)
+    /**
+     * @param Weather $weather
+     *
+     * @return JsonResponse
+     */
+    public function getList(Weather $weather): JsonResponse
     {
-        return JsonResponse::create($weather->getList(true)->toArray());
+        return JsonResponse::create($weather->getList()->toArray());
     }
 }
