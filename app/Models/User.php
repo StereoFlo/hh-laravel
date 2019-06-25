@@ -56,7 +56,7 @@ class User extends Authenticatable
      */
     public function getById(int $id): self
     {
-        return self::findOrFail($id);
+        return self::find($id);
     }
 
     /**
