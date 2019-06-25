@@ -72,7 +72,7 @@ class WeatherController extends AbstractController
      */
     public function getList(): View
     {
-        $cities = $this->weatherModel->getList();
+        $cities = $this->weatherModel->getShortList();
 
         return \view('weather.list', ['cities' => $cities]);
     }

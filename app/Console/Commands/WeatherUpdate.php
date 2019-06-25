@@ -49,7 +49,7 @@ class WeatherUpdate extends Command
             return 1;
         }
 
-        $cities = $weather->getList(true);
+        $cities = $weather->getFullList(true);
         if (empty($cities->count())) {
             return 1;
         }

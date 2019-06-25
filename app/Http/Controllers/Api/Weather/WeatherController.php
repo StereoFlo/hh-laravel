@@ -28,6 +28,6 @@ class WeatherController extends AbstractApiController
      */
     public function getList(Weather $weather): JsonResponse
     {
-        return $this->decorate($weather->getList()->toArray());
+        return $this->decorate($weather->getFullList()->toArray());
     }
 }

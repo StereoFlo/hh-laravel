@@ -60,13 +60,26 @@ class Weather extends Model
      *
      * @return LengthAwarePaginator|Collection
      */
-    public function getList(bool $withoutPaginate = false)
+    public function getShortList(bool $withoutPaginate = false)
+    {
+        if ($withoutPaginate) {
+            return self::select(['city_id', 'city_name', 'city_user_query'])->get();
+        }
+        $test = self::distinct()->select(['city_id', 'city_name', 'city_user_query'])->paginate(10);
+        return $test;
+    }
+
+    /**
+     * @param bool $withoutPaginate
+     *
+     * @return LengthAwarePaginator|Collection
+     */
+    public function getFullList(bool $withoutPaginate = false)
     {
         if ($withoutPaginate) {
             return self::get();
         }
-        $test = self::distinct()->select(['city_id', 'city_name', 'city_user_query'])->paginate(10);
-        return $test;
+        return self::paginate(10);
     }
 
     /**
