@@ -14,5 +14,6 @@
             </p>
             @endforeach
         </div>
+        {{ $city->links() }}
     </div>
 @endsection

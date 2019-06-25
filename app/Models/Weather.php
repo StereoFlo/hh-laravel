@@ -76,7 +76,7 @@ class Weather extends Model
      */
     public function getByCityId(int $cityId)
     {
-        return self::where('city_id', $cityId)->get();
+        return self::where('city_id', $cityId)->paginate(10);
     }
 
     /**
