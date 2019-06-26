@@ -9,6 +9,13 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" name="password" id="password"/>
         </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select name="role">
+                <option value="user" {{ (isset($user) && $user->role == 'user') ? 'selected' : '' }}>User</option>
+                <option value="admin" {{ (isset($user) && $user->role == 'admin') ? 'selected' : '' }}>Admin</option>
+            </select>
+        </div>
         <button type="submit">Submit</button>
         @if(isset($user) && $user->id)
             <input type="hidden" name="id" value="{{ $user->id }}">
