@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Infrastructure\Util;
 use App\Models\Weather;
 use App\Models\WeatherSchedule;
 use Illuminate\Console\Command;
@@ -55,8 +56,8 @@ class WeatherUpdate extends Command
         }
 
         foreach ($cities as $city) {
-            $weather->city_user_query = !isset($city['city_user_query']) ?: $city['city_user_query'];
-            $weather->updateWeather(null, $city['city_id']);
+            $weather->city_user_query = Util::getProperty($city, 'city_user_query');
+            $weather->updateWeather(null, Util::getProperty($city, 'city_id'));
             continue;
         }
 
